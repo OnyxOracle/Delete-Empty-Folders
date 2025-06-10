@@ -1,20 +1,50 @@
 # 🧹 Empty Folder Cleanup Utility
 
-A powerful and easy-to-use Dart command-line utility to find and delete empty folders, helping you keep your directories tidy. It can search recursively and is smart enough to remove parent directories that only contain other empty folders.
+A powerful and easy-to-use command-line utility to find and delete empty folders, helping you keep your directories tidy. It can search recursively and is smart enough to remove parent directories that only contain other empty folders.
 
 ![Demo showing the cleanup utility in action](https://placehold.co/800x400/1e1e2e/dcdcdc?text=Animation+Showing+Script+Usage)
 *(Image: A demonstration of the script identifying and deleting nested empty folders.)*
 
 ---
 
+## ✨ Features
+
+- **No Installation Needed**: Download the executable for your OS and run it directly.
+- **Cross-Platform**: Pre-compiled binaries provided for Windows, macOS, and Linux.
+- **Recursive Search**: Use the `-r` flag to search through all subdirectories.
+- **Cascading Deletion**: In recursive mode, it smartly removes parent directories that become empty after their children are deleted.
+- **Interactive Prompt**: Always asks for confirmation before deleting any files, showing you exactly what will be removed.
+- **Helpful Instructions**: Use the `-h` or `--help` flag to see usage instructions at any time.
+
+---
+
+## 🚀 Installation
+
+1.  Go to the [**Releases**](https://github.com/your-username/your-repo/releases) page.
+2.  Download the latest executable for your operating system (Windows, macOS, or Linux).
+
+### For macOS and Linux
+
+You may need to make the file executable after downloading it. Open your terminal and run:
+
+```bash
+chmod +x ./cleanup
+```
+
+---
+
 ## ⚙️ Usage
 
-Open your terminal or command prompt and navigate to the directory where you saved `cleanup.dart`.
+Open your terminal or command prompt in the directory where you downloaded the executable.
 
 ### Basic Command
 
 ```bash
-dart run cleanup.dart [OPTIONS] [PATH]
+# On Windows
+.\cleanup.exe [OPTIONS] [PATH]
+
+# On macOS/Linux
+./cleanup [OPTIONS] [PATH]
 ```
 
 ### Arguments and Options
@@ -27,76 +57,28 @@ dart run cleanup.dart [OPTIONS] [PATH]
 
 ### Examples
 
-**1. Scan the current directory (top-level only)**
+**1. Scan the current directory recursively on Windows**
 ```bash
-dart run cleanup.dart
+.\cleanup.exe -r
 ```
 
-**2. Scan a specific directory (e.g., `C:\Users\YourUser\Downloads`)**
+**2. Scan a specific directory on macOS or Linux**
 ```bash
-dart run cleanup.dart C:\Users\YourUser\Downloads
-```
-
-**3. Scan the current directory recursively**
-```bash
-dart run cleanup.dart -r
-```
-
-**4. Scan a specific directory recursively**
-```bash
-dart run cleanup.dart -r ./my_projects/
-```
-
-**5. Show the help message**
-```bash
-dart run cleanup.dart --help
+./cleanup /home/user/documents/projects
 ```
 
 ---
 
-## ✨ Features
+## 📦 Building from Source (Optional)
 
-- **Find Empty Folders**: Scans a target directory for folders that contain no files.
-- **Recursive Search**: Use the `-r` flag to search through all subdirectories.
-- **Cascading Deletion**: In recursive mode, it smartly removes parent directories that become empty after their children are deleted.
-- **Interactive Prompt**: Always asks for confirmation before deleting any files, showing you exactly what will be removed.
-- **Path Flexibility**: Run it on a specific directory (using an absolute or relative path) or simply in the current directory.
-- **Helpful Instructions**: Use the `-h` or `--help` flag to see usage instructions at any time.
-- **Cross-Platform**: Built with Dart, it runs on Windows, macOS, and Linux.
+If you prefer to compile the script yourself, you will need the [Dart SDK](https://dart.dev/get-dart).
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-You need to have the [Dart SDK](https://dart.dev/get-dart) installed on your system.
-
-### Installation
-
-1.  Clone this repository or just download the `cleanup.dart` file to your local machine.
-
-2.  That's it! The script is ready to run.
-
----
-
-## 📦 Compiling to an Executable
-
-You can compile the script into a standalone executable so you don't need the Dart SDK to run it. This is great for sharing or for using it as a system-wide command.
+1.  Clone this repository or download the `cleanup.dart` file.
+2.  Run the following command to compile:
 
 ```bash
 # This will create 'cleanup.exe' (Windows) or 'cleanup' (macOS/Linux)
 dart compile exe cleanup.dart
-```
-
-You can now run the compiled file directly:
-
-```bash
-# On Windows
-.\cleanup.exe -r C:\path\to\check
-
-# On macOS/Linux
-./cleanup -r /path/to/check
 ```
 
 ---
