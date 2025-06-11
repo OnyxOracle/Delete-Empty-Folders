@@ -106,7 +106,7 @@ Open your terminal and run the program.
 
 If you prefer to compile the script yourself, you will need the [Go SDK](https://go.dev/dl/).
 
-1.  Clone this repository: `git clone https://github.com/varvaruk-v/Delete-Empty-Folders.git`
+1.  Clone this repository: `git clone https://github.com/OnyxOracle/Delete-Empty-Folders.git`
 2.  Navigate into the directory: `cd Delete-Empty-Folders`
 3.  Install dependencies: `go mod tidy`
 4.  Run the appropriate build script for your system:
@@ -117,4 +117,4 @@ If you prefer to compile the script yourself, you will need the [Go SDK](https:/
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/varvaruk-v/Delete-Empty-Folders/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/OnyxOracle/Delete-Empty-Folders/issues).
