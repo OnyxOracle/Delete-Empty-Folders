@@ -35,6 +35,8 @@ call :build plan9 amd64
 call :build solaris amd64
 call :build windows 386
 call :build windows amd64
+call :build windows arm64
+call :build windows arm
 
 echo.
 echo All builds completed successfully!

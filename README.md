@@ -30,31 +30,33 @@ Alternatively, download the specific executable for your system from the table b
 
 | Operating System | Architecture | Download Link |
 | :--------------- | :----------- | :------------ |
-| **Windows** | 64-bit (x64) | [Download]()  |
-|                  | 32-bit (x86) | [Download]()  |
-| **macOS** | Apple Silicon| [Download]()  |
-|                  | Intel        | [Download]()  |
-| **Linux** | 64-bit (x64) | [Download]()  |
-|                  | 32-bit (x86) | [Download]()  |
-|                  | ARM 64-bit   | [Download]()  |
-|                  | ARM 32-bit   | [Download]()  |
-|                  | PowerPC 64-bit (Big Endian) | [Download]()  |
-|                  | PowerPC 64-bit (Little Endian)| [Download]()  |
-|                  | MIPS 64-bit  | [Download]()  |
-|                  | MIPS 64-bit (Little Endian) | [Download]()  |
-| **FreeBSD** | 64-bit (x64) | [Download]()  |
-|                  | 32-bit (x86) | [Download]()  |
-|                  | ARM          | [Download]()  |
-| **OpenBSD** | 64-bit (x64) | [Download]()  |
-|                  | 32-bit (x86) | [Download]()  |
-|                  | ARM          | [Download]()  |
-| **NetBSD** | 64-bit (x64) | [Download]()  |
-|                  | 32-bit (x86) | [Download]()  |
-|                  | ARM          | [Download]()  |
-| **DragonFly BSD**| 64-bit (x64) | [Download]()  |
-| **Solaris** | 64-bit (x64) | [Download]()  |
-| **Plan 9** | 64-bit (x64) | [Download]()  |
-|                  | 32-bit (x86) | [Download]()  |
+| **Windows** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-amd64.exe)  |
+|                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-386.exe)  |
+|                  | ARM 64-bit | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm64.exe)  |
+|                  | ARM 32-bit | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm.exe)  |
+| **macOS** | Apple Silicon| [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-arm64)  |
+|                  | Intel        | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-amd64)  |
+| **Linux** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-386)  |
+|                  | ARM 64-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-arm64)  |
+|                  | ARM 32-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-arm)  |
+|                  | PowerPC 64-bit (Big Endian) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-ppc64)  |
+|                  | PowerPC 64-bit (Little Endian)| [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-ppc64le)  |
+|                  | MIPS 64-bit  | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips64)  |
+|                  | MIPS 64-bit (Little Endian) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips64le)  |
+| **FreeBSD** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-386)  |
+|                  | ARM          | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-arm)  |
+| **OpenBSD** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-386)  |
+|                  | ARM          | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-arm)  |
+| **NetBSD** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-386)  |
+|                  | ARM          | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-arm)  |
+| **DragonFly BSD**| 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-dragonfly-amd64)  |
+| **Solaris** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-solaris-amd64)  |
+| **Plan 9** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-plan9-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-plan9-386)  |
 
 ---
 
