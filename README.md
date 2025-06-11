@@ -34,8 +34,8 @@ Alternatively, download the specific executable for your system from the table b
 |                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-386.exe)  |
 |                  | ARM 64-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm64.exe)  |
 |                  | ARM 32-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm.exe)  |
-| **macOS** | Apple Silicon| [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-arm64)  |
-|                  | Intel        | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-amd64)  |
+| **macOS** | Apple Silicon (ARM 64-bit)| [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-arm64)  |
+|                  | Intel 64-bit (x64)     | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-amd64)  |
 | **Linux** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-amd64)  |
 |                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-386)  |
 |                  | ARM 64-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-arm64)  |
