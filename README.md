@@ -9,7 +9,7 @@ A powerful, cross-platform command-line tool to find and manage empty or large f
 
 ## ✨ Features
 
-- **Extensive Cross-Platform Support**: Pre-compiled binaries are provided for over 20 combinations of operating systems and architectures (see below).
+- **Extensive Cross-Platform Support**: Pre-compiled binaries are provided for nearly 30 combinations of operating systems and architectures (see below).
 - **No Installation Needed**: Download the executable for your OS, and it's ready to run.
 - **Two Powerful Commands**:
     - `empty`: Finds and deletes empty folders, with support for recursive scanning and cascading deletion.
@@ -24,7 +24,7 @@ A powerful, cross-platform command-line tool to find and manage empty or large f
 
 ## 🚀 Downloads
 
-You can find all binaries conveniently packaged in a `.zip` file on the [**GitHub Releases**](https://github.com/your-username/your-repo/releases) page.
+You can find all binaries conveniently packaged in a `.zip` file on the [**GitHub Releases**](https://github.com/varvaruk-v/Delete-Empty-Folders/releases) page.
 
 Alternatively, download the specific executable for your system from the table below.
 
@@ -32,31 +32,38 @@ Alternatively, download the specific executable for your system from the table b
 | :--------------- | :----------- | :------------ |
 | **Windows** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-amd64.exe)  |
 |                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-386.exe)  |
-|                  | ARM 64-bit | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm64.exe)  |
-|                  | ARM 32-bit | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm.exe)  |
+|                  | ARM 64-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm64.exe)  |
+|                  | ARM 32-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm.exe)  |
 | **macOS** | Apple Silicon| [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-arm64)  |
 |                  | Intel        | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-amd64)  |
 | **Linux** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-amd64)  |
 |                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-386)  |
 |                  | ARM 64-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-arm64)  |
 |                  | ARM 32-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-arm)  |
+|                  | RISC-V 64-bit| [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-riscv64)  |
 |                  | PowerPC 64-bit (Big Endian) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-ppc64)  |
 |                  | PowerPC 64-bit (Little Endian)| [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-ppc64le)  |
-|                  | MIPS 64-bit  | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips64)  |
+|                  | MIPS 64-bit (Big Endian) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips64)  |
 |                  | MIPS 64-bit (Little Endian) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips64le)  |
+|                  | MIPS 32-bit (Big Endian) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips)  |
+|                  | MIPS 32-bit (Little Endian) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mipsle)  |
 | **FreeBSD** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-amd64)  |
 |                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-386)  |
-|                  | ARM          | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-arm)  |
+|                  | ARM 64-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-arm64)  |
+|                  | ARM 32-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-arm)  |
 | **OpenBSD** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-amd64)  |
 |                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-386)  |
-|                  | ARM          | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-arm)  |
+|                  | ARM 64-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-arm64)  |
+|                  | ARM 32-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-arm)  |
 | **NetBSD** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-amd64)  |
 |                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-386)  |
-|                  | ARM          | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-arm)  |
+|                  | ARM 64-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-arm64)  |
+|                  | ARM 32-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-arm)  |
 | **DragonFly BSD**| 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-dragonfly-amd64)  |
 | **Solaris** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-solaris-amd64)  |
 | **Plan 9** | 64-bit (x64) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-plan9-amd64)  |
 |                  | 32-bit (x86) | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-plan9-386)  |
+|                  | ARM 32-bit   | [Download](https://github.com/varvaruk-v/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-plan9-arm)  |
 
 ---
 
@@ -99,10 +106,10 @@ Open your terminal and run the program.
 
 If you prefer to compile the script yourself, you will need the [Go SDK](https://go.dev/dl/).
 
-1.  Clone this repository: `git clone https://github.com/your-username/your-repo.git`
-2.  Navigate into the directory: `cd your-repo`
+1.  Clone this repository: `git clone https://github.com/varvaruk-v/Delete-Empty-Folders.git`
+2.  Navigate into the directory: `cd Delete-Empty-Folders`
 3.  Install dependencies: `go mod tidy`
-4.  Run the build script:
+4.  Run the appropriate build script for your system:
     - On Windows: `.\build-all.bat` or `.\build-all.ps1`
     - On Linux/macOS: `chmod +x ./build-all.sh` then `./build-all.sh`
 
@@ -110,4 +117,4 @@ If you prefer to compile the script yourself, you will need the [Go SDK](https:/
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/your-repo/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/varvaruk-v/Delete-Empty-Folders/issues).
