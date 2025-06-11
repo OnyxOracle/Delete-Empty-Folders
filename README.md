@@ -9,7 +9,7 @@ A powerful, cross-platform command-line tool to find and manage empty or large f
 
 ## ✨ Features
 
-- **Extensive Cross-Platform Support**: Pre-compiled binaries are provided for nearly 30 combinations of operating systems and architectures (see below).
+- **Extensive Cross-Platform Support**: Pre-compiled binaries are provided for over 30 combinations of operating systems and architectures (see below).
 - **No Installation Needed**: Download the executable for your OS, and it's ready to run.
 - **Two Powerful Commands**:
     - `empty`: Finds and deletes empty folders, with support for recursive scanning and cascading deletion.
