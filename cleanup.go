@@ -1,3 +1,10 @@
+/*
+Cleanup is a command-line tool that helps you keep your filesystem tidy.
+It can find and delete empty folders (recursively) and also find the largest folders to help you manage disk space.
+
+Version: v.1.1.1 (13.06.2025)
+*/
+
 package main
 
 import (
@@ -233,9 +240,9 @@ func printEmptyModeSummary(targetDir string, olderThan time.Duration) {
 	if config.dryRun {
 		logInfo("🧪 Action: Dry Run (no changes will be made)")
 	} else if config.useTrash {
-		logInfo("♻️  Action: Move to System Trash")
+		logInfo("♻️ Action: Move to System Trash")
 	} else {
-		logInfo("🗑️  Action: Permanent Deletion")
+		logInfo("🗑️ Action: Permanent Deletion")
 	}
 	if config.force {
 		logInfo("❗ Confirmation: Skipped (--force enabled)")
@@ -259,15 +266,18 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 	ignoreFileSet := stringSliceToSet(config.ignoreFiles)
 	excludeDirSet := stringSliceToSet(config.excludeDirs)
 
+	logVerbose("Phase 1: Walking filesystem to collect all directories...")
 	err := filepath.Walk(path, func(p string, info os.FileInfo, err error) error {
 		if err != nil {
-			return err
+			logVerbose("  -> Error accessing %s: %v", p, err)
+			return nil // Continue walking even if there are errors.
 		}
 		if info.IsDir() {
 			if _, excluded := excludeDirSet[info.Name()]; excluded {
-				logVerbose("Excluding directory: %s", p)
+				logVerbose("  -> Excluding directory '%s' and its children.", p)
 				return filepath.SkipDir
 			}
+			logVerbose("  -> Found directory: %s", p)
 			allDirs = append(allDirs, p)
 		}
 		return nil
@@ -275,28 +285,33 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 	if err != nil {
 		return nil, err
 	}
+	logVerbose("Phase 1 Complete. Found %d directories.", len(allDirs))
 
 	sort.Slice(allDirs, func(i, j int) bool {
 		return len(strings.Split(allDirs[i], string(os.PathSeparator))) > len(strings.Split(allDirs[j], string(os.PathSeparator)))
 	})
 
+	logVerbose("\nPhase 2: Evaluating directories from deepest to shallowest...")
 	for _, dir := range allDirs {
 		if dir == path {
 			continue
 		}
+		logVerbose("  -> Evaluating: %s", dir)
 
 		info, err := os.Stat(dir)
 		if err != nil {
+			logVerbose("    - Could not stat directory, skipping.")
 			continue
 		}
 
 		if olderThan > 0 && time.Since(info.ModTime()) < olderThan {
-			logVerbose("Skipping recent directory: %s", dir)
+			logVerbose("    - SKIPPING: Directory is newer than specified age.")
 			continue
 		}
 
 		entries, err := os.ReadDir(dir)
 		if err != nil {
+			logVerbose("    - Could not read directory contents, skipping.")
 			continue
 		}
 
@@ -304,21 +319,29 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 		for _, entry := range entries {
 			if !entry.IsDir() {
 				if _, ignored := ignoreFileSet[entry.Name()]; !ignored {
+					logVerbose("    - Contains non-ignored file: %s", entry.Name())
 					isEmpty = false
 					break
 				}
+				logVerbose("    - Contains ignored file: %s", entry.Name())
 			} else {
 				if !deletablePaths[filepath.Join(dir, entry.Name())] {
+					logVerbose("    - Contains non-empty subdirectory: %s", entry.Name())
 					isEmpty = false
 					break
 				}
+				logVerbose("    - Contains deletable subdirectory: %s", entry.Name())
 			}
 		}
 
 		if isEmpty {
+			logVerbose("    - ✅ Marked as empty.")
 			deletablePaths[dir] = true
+		} else {
+			logVerbose("    - ❌ Marked as NOT empty.")
 		}
 	}
+	logVerbose("Phase 2 Complete.")
 
 	var emptyDirs []string
 	for dir := range deletablePaths {
@@ -343,25 +366,28 @@ func findEmptyTopLevel(path string, olderThan time.Duration) ([]string, error) {
 		if !entry.IsDir() {
 			continue
 		}
+		dirPath := filepath.Join(path, entry.Name())
+		logVerbose("  -> Evaluating: %s", dirPath)
 
 		if _, excluded := excludeDirSet[entry.Name()]; excluded {
-			logVerbose("Excluding directory: %s", entry.Name())
+			logVerbose("    - SKIPPING: Directory is in exclude list.")
 			continue
 		}
 
-		dirPath := filepath.Join(path, entry.Name())
 		info, err := os.Stat(dirPath)
 		if err != nil {
+			logVerbose("    - Could not stat directory, skipping.")
 			continue
 		}
 
 		if olderThan > 0 && time.Since(info.ModTime()) < olderThan {
-			logVerbose("Skipping recent directory: %s", dirPath)
+			logVerbose("    - SKIPPING: Directory is newer than specified age.")
 			continue
 		}
 
 		subEntries, err := os.ReadDir(dirPath)
 		if err != nil {
+			logVerbose("    - Could not read directory contents, skipping.")
 			continue
 		}
 
@@ -369,17 +395,23 @@ func findEmptyTopLevel(path string, olderThan time.Duration) ([]string, error) {
 		for _, subEntry := range subEntries {
 			if !subEntry.IsDir() {
 				if _, ignored := ignoreFileSet[subEntry.Name()]; !ignored {
+					logVerbose("    - Contains non-ignored file: %s", subEntry.Name())
 					isEmpty = false
 					break
 				}
+				logVerbose("    - Contains ignored file: %s", subEntry.Name())
 			} else {
+				logVerbose("    - Contains subdirectory: %s", subEntry.Name())
 				isEmpty = false
 				break
 			}
 		}
 
 		if isEmpty {
+			logVerbose("    - ✅ Marked as empty.")
 			emptyDirs = append(emptyDirs, dirPath)
+		} else {
+			logVerbose("    - ❌ Marked as NOT empty.")
 		}
 	}
 
