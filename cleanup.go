@@ -113,12 +113,12 @@ func runEmpty(cmd *cobra.Command, args []string) {
 	// --- Setup ---
 	olderThanDuration, err := parseDuration(config.olderThanStr)
 	if err != nil {
-		logError("Invalid duration string for --older-than: %v", err)
+		logError("💥 Invalid duration string for --older-than: %v", err)
 		os.Exit(1)
 	}
 
 	targetDir := getTargetDir(args)
-	logVerbose("Starting 'empty' scan on directory: %s", targetDir)
+	printEmptyModeSummary(targetDir, olderThanDuration)
 
 	var emptyDirs []string
 	if config.isRecursive {
@@ -128,33 +128,33 @@ func runEmpty(cmd *cobra.Command, args []string) {
 	}
 
 	if err != nil {
-		logError("An error occurred during scan: %v", err)
+		logError("💥 An error occurred during scan: %v", err)
 		os.Exit(1)
 	}
 
 	// --- Results and Deletion ---
 	if len(emptyDirs) == 0 {
-		logInfo("✅ No empty folders were found.")
+		logInfo("\n🎉 Success! No empty folders were found.")
 		return
 	}
 
-	logInfo("🔎 Found %d empty folders to process:", len(emptyDirs))
+	logInfo("\n🔎 Found %d empty folders to process:", len(emptyDirs))
 	for _, dir := range emptyDirs {
 		logInfo("  📁 %s", dir)
 	}
 
 	if config.dryRun {
-		logInfo("\n--dry-run enabled. No changes will be made.")
+		logInfo("\n🧪 --dry-run enabled. No changes will be made.")
 		return
 	}
 
 	if !config.force {
-		logInfoBlue("\n❔ Would you like to %s them? (yes/no) ", getActionString())
+		fmt.Printf("\n\033[34m🤔 Would you like to %s them? [Yes/No] \033[0m", getActionString())
 		reader := bufio.NewReader(os.Stdin)
 		response, _ := reader.ReadString('\n')
 		response = strings.ToLower(strings.TrimSpace(response))
 		if response != "yes" && response != "y" {
-			logInfo("\n👍 No folders were changed.")
+			logInfo("\n👍 OK. No folders were changed.")
 			return
 		}
 	}
@@ -164,7 +164,6 @@ func runEmpty(cmd *cobra.Command, args []string) {
 	for _, dir := range emptyDirs {
 		var opErr error
 		if config.useTrash {
-			// This library uses the Throw function.
 			opErr = trash.Throw(dir)
 		} else {
 			opErr = os.RemoveAll(dir)
@@ -177,20 +176,26 @@ func runEmpty(cmd *cobra.Command, args []string) {
 			processedCount++
 		}
 	}
-	logInfo("\n✨ Process complete. %s %d folder(s).", getActionStringPast(), processedCount)
+	logInfo("\n✨ All done! %s %d folder(s).", getActionStringPast(), processedCount)
 }
 
 // runLarge is the main function for the 'large' subcommand.
 func runLarge(cmd *cobra.Command, args []string) {
 	// --- Setup ---
 	targetDir := getTargetDir(args)
-	logVerbose("Starting 'large' scan on directory: %s", targetDir)
-	logInfo("Scanning for largest folders... this may take a while.")
+	logInfo("--- 📊 Find Large Folders Mode ---")
+	logInfo("🎯 Target Directory: %s", targetDir)
+	logInfo("📈 Showing Top: %d folders", config.topN)
+	if len(config.excludeDirs) > 0 {
+		logInfo("🚫 Excluding: %s", strings.Join(config.excludeDirs, ", "))
+	}
+	logInfo("----------------------------------\n")
+	logInfo("⏳ Scanning for largest folders... this may take a while.")
 
 	// --- Execution ---
 	dirSizes, err := calculateDirectorySizes(targetDir)
 	if err != nil {
-		logError("Failed to calculate directory sizes: %v", err)
+		logError("💥 Failed to calculate directory sizes: %v", err)
 		os.Exit(1)
 	}
 
@@ -217,6 +222,36 @@ func runLarge(cmd *cobra.Command, args []string) {
 
 // --- Core Logic & Helper Functions ---
 
+func printEmptyModeSummary(targetDir string, olderThan time.Duration) {
+	logInfo("--- 🧹 Find Empty Folders Mode ---")
+	logInfo("🎯 Target Directory: %s", targetDir)
+	if config.isRecursive {
+		logInfo("🌲 Mode: Recursive Scan Enabled")
+	} else {
+		logInfo("📂 Mode: Top-Level Scan Only")
+	}
+	if config.dryRun {
+		logInfo("🧪 Action: Dry Run (no changes will be made)")
+	} else if config.useTrash {
+		logInfo("♻️  Action: Move to System Trash")
+	} else {
+		logInfo("🗑️  Action: Permanent Deletion")
+	}
+	if config.force {
+		logInfo("❗ Confirmation: Skipped (--force enabled)")
+	}
+	if olderThan > 0 {
+		logInfo("⏳ Age Filter: Only folders older than %s", config.olderThanStr)
+	}
+	if len(config.ignoreFiles) > 0 {
+		logInfo("🙈 Ignoring Files: %s", strings.Join(config.ignoreFiles, ", "))
+	}
+	if len(config.excludeDirs) > 0 {
+		logInfo("🚫 Excluding Dirs: %s", strings.Join(config.excludeDirs, ", "))
+	}
+	logInfo("----------------------------------\n")
+}
+
 // findEmptyRecursive performs a bottom-up search.
 func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) {
 	var allDirs []string
@@ -229,10 +264,9 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 			return err
 		}
 		if info.IsDir() {
-			// Check if the directory name itself is in the exclude list.
 			if _, excluded := excludeDirSet[info.Name()]; excluded {
 				logVerbose("Excluding directory: %s", p)
-				return filepath.SkipDir // Skip this directory and its children.
+				return filepath.SkipDir
 			}
 			allDirs = append(allDirs, p)
 		}
@@ -242,23 +276,20 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 		return nil, err
 	}
 
-	// Sort directories from deepest to shallowest.
 	sort.Slice(allDirs, func(i, j int) bool {
 		return len(strings.Split(allDirs[i], string(os.PathSeparator))) > len(strings.Split(allDirs[j], string(os.PathSeparator)))
 	})
 
 	for _, dir := range allDirs {
-		// Never process the root directory of the scan.
 		if dir == path {
 			continue
 		}
 
 		info, err := os.Stat(dir)
 		if err != nil {
-			continue // Can't get info, so skip.
+			continue
 		}
 
-		// Check if the directory is too new to be considered.
 		if olderThan > 0 && time.Since(info.ModTime()) < olderThan {
 			logVerbose("Skipping recent directory: %s", dir)
 			continue
@@ -266,20 +297,17 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 
 		entries, err := os.ReadDir(dir)
 		if err != nil {
-			continue // Can't read, so skip.
+			continue
 		}
 
 		isEmpty := true
 		for _, entry := range entries {
-			// Check if the entry is a file or a directory.
 			if !entry.IsDir() {
-				// It's a file. If it's NOT in our ignore list, the directory is NOT empty.
 				if _, ignored := ignoreFileSet[entry.Name()]; !ignored {
 					isEmpty = false
 					break
 				}
 			} else {
-				// It's a directory. If this subdirectory is NOT deletable, then the parent is NOT empty.
 				if !deletablePaths[filepath.Join(dir, entry.Name())] {
 					isEmpty = false
 					break
@@ -296,7 +324,7 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 	for dir := range deletablePaths {
 		emptyDirs = append(emptyDirs, dir)
 	}
-	sort.Strings(emptyDirs) // Sort alphabetically for consistent output.
+	sort.Strings(emptyDirs)
 	return emptyDirs, nil
 }
 
@@ -306,19 +334,16 @@ func findEmptyTopLevel(path string, olderThan time.Duration) ([]string, error) {
 	ignoreFileSet := stringSliceToSet(config.ignoreFiles)
 	excludeDirSet := stringSliceToSet(config.excludeDirs)
 
-	// Read the entries in the root search directory.
 	entries, err := os.ReadDir(path)
 	if err != nil {
 		return nil, err
 	}
 
 	for _, entry := range entries {
-		// We only care about directories.
 		if !entry.IsDir() {
 			continue
 		}
 
-		// Check if the directory name itself is in the exclude list.
 		if _, excluded := excludeDirSet[entry.Name()]; excluded {
 			logVerbose("Excluding directory: %s", entry.Name())
 			continue
@@ -327,31 +352,27 @@ func findEmptyTopLevel(path string, olderThan time.Duration) ([]string, error) {
 		dirPath := filepath.Join(path, entry.Name())
 		info, err := os.Stat(dirPath)
 		if err != nil {
-			continue // Can't get info, so skip.
+			continue
 		}
 
-		// Check if the directory is too new to be considered.
 		if olderThan > 0 && time.Since(info.ModTime()) < olderThan {
 			logVerbose("Skipping recent directory: %s", dirPath)
 			continue
 		}
 
-		// Now check if this directory is empty.
 		subEntries, err := os.ReadDir(dirPath)
 		if err != nil {
-			continue // Can't read, so skip.
+			continue
 		}
 
 		isEmpty := true
 		for _, subEntry := range subEntries {
-			// If we find any file that is not in the ignore list, it's not empty.
 			if !subEntry.IsDir() {
 				if _, ignored := ignoreFileSet[subEntry.Name()]; !ignored {
 					isEmpty = false
 					break
 				}
 			} else {
-				// If it contains another directory, it is not empty in top-level mode.
 				isEmpty = false
 				break
 			}
@@ -362,7 +383,7 @@ func findEmptyTopLevel(path string, olderThan time.Duration) ([]string, error) {
 		}
 	}
 
-	sort.Strings(emptyDirs) // Sort for consistent output.
+	sort.Strings(emptyDirs)
 	return emptyDirs, nil
 }
 
@@ -380,10 +401,9 @@ func calculateDirectorySizes(root string) (map[string]int64, error) {
 			if _, excluded := excludeDirSet[info.Name()]; excluded {
 				return filepath.SkipDir
 			}
-			return nil // Just continue if it's a directory
+			return nil
 		}
 
-		// It's a file, so add its size to its parent and all ancestors
 		size := info.Size()
 		for p := filepath.Dir(path); strings.HasPrefix(p, root) || p == root; p = filepath.Dir(p) {
 			dirSizes[p] += size
@@ -399,14 +419,13 @@ func calculateDirectorySizes(root string) (map[string]int64, error) {
 func configureLogger() {
 	var out io.Writer = os.Stdout
 	if config.quiet {
-		out = io.Discard // Send logs to nowhere
+		out = io.Discard
 	} else if config.logFile != "" {
 		file, err := os.OpenFile(config.logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 		if err != nil {
 			log.Fatalf("Failed to open log file: %v", err)
 		}
 		if config.verbose {
-			// If verbose, write to both file and stdout
 			out = io.MultiWriter(os.Stdout, file)
 		} else {
 			out = file
@@ -423,7 +442,6 @@ func logInfo(format string, v ...interface{}) {
 
 func logInfoBlue(format string, v ...interface{}) {
 	if !config.quiet {
-		// ANSI color codes for blue text
 		logger.Printf("\033[34m"+format+"\033[0m", v...)
 	}
 }
@@ -435,10 +453,8 @@ func logVerbose(format string, v ...interface{}) {
 }
 
 func logError(format string, v ...interface{}) {
-	// Errors are always printed unless quiet.
 	if !config.quiet {
-		// ANSI color codes for red text
-		logger.Printf("\031m[ERROR] "+format+"\033[0m", v...)
+		logger.Printf("\033[31m[ERROR] "+format+"\033[0m", v...)
 	}
 }
 
