@@ -2,7 +2,8 @@
 
 A powerful, cross-platform command-line tool to find and manage empty or large folders, helping you keep your filesystem tidy.
 
-![Demo showing the cleanup utility in action](https://placehold.co/800x400/1e1e2e/dcdcdc?text=Animation+Showing+Script+Usage)
+![Demo showing the cleanup utility in action](https://github.com/user-attachments/assets/43a4646a-56d9-493f-aaae-e5378909818b)
+
 *(Image: A demonstration of the script identifying and deleting nested empty folders.)*
 
 ---
@@ -30,40 +31,40 @@ Alternatively, download the specific executable for your system from the table b
 
 | Operating System | Architecture | Download Link |
 | :--------------- | :----------- | :------------ |
-| **Windows** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-amd64.exe)  |
-|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-386.exe)  |
-|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm64.exe)  |
-|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-windows-arm.exe)  |
-| **macOS** | Apple Silicon (ARM 64-bit)| [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-arm64)  |
-|                  | Intel 64-bit (x64)     | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-darwin-amd64)  |
-| **Linux** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-amd64)  |
-|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-386)  |
-|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-arm64)  |
-|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-arm)  |
-|                  | RISC-V 64-bit| [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-riscv64)  |
-|                  | PowerPC 64-bit (Big Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-ppc64)  |
-|                  | PowerPC 64-bit (Little Endian)| [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-ppc64le)  |
-|                  | MIPS 64-bit (Big Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips64)  |
-|                  | MIPS 64-bit (Little Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips64le)  |
-|                  | MIPS 32-bit (Big Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mips)  |
-|                  | MIPS 32-bit (Little Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-linux-mipsle)  |
-| **FreeBSD** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-amd64)  |
-|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-386)  |
-|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-arm64)  |
-|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-freebsd-arm)  |
-| **OpenBSD** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-amd64)  |
-|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-386)  |
-|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-arm64)  |
-|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-openbsd-arm)  |
-| **NetBSD** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-amd64)  |
-|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-386)  |
-|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-arm64)  |
-|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-netbsd-arm)  |
-| **DragonFly BSD**| 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-dragonfly-amd64)  |
-| **Solaris** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-solaris-amd64)  |
-| **Plan 9** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-plan9-amd64)  |
-|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-plan9-386)  |
-|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/download/v.1.1.0/cleanup-plan9-arm)  |
+| **Windows** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-windows-amd64.exe)  |
+|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-windows-386.exe)  |
+|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-windows-arm64.exe)  |
+|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-windows-arm.exe)  |
+| **macOS** | Apple Silicon (ARM 64-bit)| [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-darwin-arm64)  |
+|                  | Intel 64-bit (x64)     | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-darwin-amd64)  |
+| **Linux** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-386)  |
+|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-arm64)  |
+|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-arm)  |
+|                  | RISC-V 64-bit| [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-riscv64)  |
+|                  | PowerPC 64-bit (Big Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-ppc64)  |
+|                  | PowerPC 64-bit (Little Endian)| [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-ppc64le)  |
+|                  | MIPS 64-bit (Big Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-mips64)  |
+|                  | MIPS 64-bit (Little Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-mips64le)  |
+|                  | MIPS 32-bit (Big Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-mips)  |
+|                  | MIPS 32-bit (Little Endian) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-linux-mipsle)  |
+| **FreeBSD** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-freebsd-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-freebsd-386)  |
+|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-freebsd-arm64)  |
+|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-freebsd-arm)  |
+| **OpenBSD** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-openbsd-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-openbsd-386)  |
+|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-openbsd-arm64)  |
+|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-openbsd-arm)  |
+| **NetBSD** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-netbsd-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-netbsd-386)  |
+|                  | ARM 64-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-netbsd-arm64)  |
+|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-netbsd-arm)  |
+| **DragonFly BSD**| 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-dragonfly-amd64)  |
+| **Solaris** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-solaris-amd64)  |
+| **Plan 9** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-plan9-amd64)  |
+|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-plan9-386)  |
+|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-plan9-arm)  |
 
 ---
 
