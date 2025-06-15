@@ -11,6 +11,7 @@ New-Item -ItemType Directory -Path $buildDir | Out-Null
 
 # Define the list of build targets as an array of objects.
 $targets = @(
+    @{OS="aix";       Arch="ppc64"},
     @{OS="darwin";    Arch="amd64"},
     @{OS="darwin";    Arch="arm64"},
     @{OS="dragonfly"; Arch="amd64"},
@@ -18,17 +19,21 @@ $targets = @(
     @{OS="freebsd";   Arch="amd64"},
     @{OS="freebsd";   Arch="arm"},
     @{OS="freebsd";   Arch="arm64"},
+    @{OS="freebsd";   Arch="riscv64"},
+    @{OS="illumos";   Arch="amd64"},
     @{OS="linux";     Arch="386"},
     @{OS="linux";     Arch="amd64"},
     @{OS="linux";     Arch="arm"},
     @{OS="linux";     Arch="arm64"},
+    @{OS="linux";     Arch="loong64"},
     @{OS="linux";     Arch="mips"},
-    @{OS="linux";     Arch="mipsle"},
     @{OS="linux";     Arch="mips64"},
     @{OS="linux";     Arch="mips64le"},
+    @{OS="linux";     Arch="mipsle"},
     @{OS="linux";     Arch="ppc64"},
     @{OS="linux";     Arch="ppc64le"},
     @{OS="linux";     Arch="riscv64"},
+    @{OS="linux";     Arch="s390x"},
     @{OS="netbsd";    Arch="386"},
     @{OS="netbsd";    Arch="amd64"},
     @{OS="netbsd";    Arch="arm"},
@@ -37,14 +42,16 @@ $targets = @(
     @{OS="openbsd";   Arch="amd64"},
     @{OS="openbsd";   Arch="arm"},
     @{OS="openbsd";   Arch="arm64"},
+    @{OS="openbsd";   Arch="ppc64"},
+    @{OS="openbsd";   Arch="riscv64"},
     @{OS="plan9";     Arch="386"},
     @{OS="plan9";     Arch="amd64"},
     @{OS="plan9";     Arch="arm"},
     @{OS="solaris";   Arch="amd64"},
     @{OS="windows";   Arch="386"},
     @{OS="windows";   Arch="amd64"},
-    @{OS="windows";   Arch="arm"},
-    @{OS="windows";   Arch="arm64"}
+    @{OS="windows";   Arch="arm64"},
+    @{OS="windows";   Arch="arm"}
 )
 
 $total = $targets.Count
@@ -67,7 +74,7 @@ foreach ($target in $targets) {
     
     $outputPath = Join-Path $buildDir $outputName
     
-    # Run the build command.
+    # Run the simplified build command.
     go build -o $outputPath .
     
     # Check for build errors.
@@ -82,16 +89,4 @@ foreach ($target in $targets) {
 
 Write-Host ""
 Write-Host "All individual builds completed!" -ForegroundColor Green
-
-# Optional: Create a ZIP archive of all builds for easy distribution.
-Write-Host "Creating ZIP archive of all builds..." -ForegroundColor Cyan
-try {
-    Compress-Archive -Path "$buildDir\*" -DestinationPath "cleanup-builds.zip" -Force
-    Write-Host "Successfully created cleanup-builds.zip" -ForegroundColor Green
-} catch {
-    Write-Host "Warning: Could not create ZIP file. This feature requires PowerShell 5.1 or newer." -ForegroundColor Yellow
-}
-
-Write-Host ""
-Write-Host "Process finished. Executables are in the 'builds' folder."
 Read-Host -Prompt "Press Enter to exit"

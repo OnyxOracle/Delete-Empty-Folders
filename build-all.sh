@@ -12,6 +12,7 @@ mkdir builds
 # Define the list of target platforms in an array.
 # Format: "OS/ARCH"
 targets=(
+    "aix/ppc64"
     "darwin/amd64"
     "darwin/arm64"
     "dragonfly/amd64"
@@ -19,17 +20,21 @@ targets=(
     "freebsd/amd64"
     "freebsd/arm"
     "freebsd/arm64"
+    "freebsd/riscv64"
+    "illumos/amd64"
     "linux/386"
     "linux/amd64"
     "linux/arm"
     "linux/arm64"
+    "linux/loong64"
     "linux/mips"
-    "linux/mipsle"
     "linux/mips64"
     "linux/mips64le"
+    "linux/mipsle"
     "linux/ppc64"
     "linux/ppc64le"
     "linux/riscv64"
+    "linux/s390x"
     "netbsd/386"
     "netbsd/amd64"
     "netbsd/arm"
@@ -38,14 +43,16 @@ targets=(
     "openbsd/amd64"
     "openbsd/arm"
     "openbsd/arm64"
+    "openbsd/ppc64"
+    "openbsd/riscv64"
     "plan9/386"
     "plan9/amd64"
     "plan9/arm"
     "solaris/amd64"
     "windows/386"
     "windows/amd64"
-    "windows/arm"
     "windows/arm64"
+    "windows/arm"
 )
 
 total=${#targets[@]}
@@ -65,7 +72,7 @@ for target in "${targets[@]}"; do
         output_name+=".exe"
     fi
     
-    # Run the build command with the environment variables set for just this command.
+    # Run the simplified build command.
     env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name .
     
     # Check if the build failed.

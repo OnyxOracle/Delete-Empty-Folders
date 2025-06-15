@@ -1,8 +1,6 @@
 /*
 Cleanup is a command-line tool that helps you keep your filesystem tidy.
 It can find and delete empty folders (recursively) and also find the largest folders to help you manage disk space.
-
-Version: v.1.1.1 (13.06.2025)
 */
 
 package main
@@ -20,8 +18,17 @@ import (
 
 	// Third-party libraries for advanced features.
 	// User must run 'go mod tidy' to install these.
-	"github.com/hymkor/trash-go" // Correct, native Go library for moving files to trash.
-	"github.com/spf13/cobra"      // The best library for modern CLI applications.
+	"github.com/hymkor/trash-go" // Native Go library for moving files to trash.
+	"github.com/spf13/cobra"     // The best library for modern CLI applications.
+)
+
+// --- Version Information ---
+
+var (
+	version   = "v.1.1.2"
+	date      = "15.06.2025"
+	appName   = "Cleanup Utility"
+	copyright = "Copyright (c) 2025 OnyxOracle"
 )
 
 // --- Global Configuration & State ---
@@ -79,6 +86,18 @@ var largeCmd = &cobra.Command{
 	Run:   runLarge,
 }
 
+// versionCmd displays the version information.
+var versionCmd = &cobra.Command{
+	Use:   "version",
+	Short: "Print the version number and build info",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("🧹 %s\n", appName)
+		fmt.Printf("   Version: %s\n", version)
+		fmt.Printf("   Built Date: %s\n", date)
+		fmt.Printf("   %s\n", copyright)
+	},
+}
+
 // --- Initialization ---
 
 // init() is a special Go function that runs when the program starts.
@@ -87,15 +106,15 @@ func init() {
 	// Add flags to the 'empty' subcommand.
 	emptyCmd.Flags().BoolVarP(&config.isRecursive, "recursive", "r", false, "Search recursively and delete parent folders that become empty.")
 	emptyCmd.Flags().BoolVar(&config.dryRun, "dry-run", false, "Perform a trial run without making any changes.")
-	emptyCmd.Flags().BoolVarP(&config.force, "force", "y", false, "Skip the confirmation prompt and delete all found folders.")
-	emptyCmd.Flags().BoolVar(&config.useTrash, "trash", false, "Move folders to system trash instead of permanently deleting.")
-	emptyCmd.Flags().StringSliceVar(&config.ignoreFiles, "ignore-files", []string{".DS_Store", "Thumbs.db"}, "Comma-separated list of files to ignore (e.g., .DS_Store,Thumbs.db).")
-	emptyCmd.Flags().StringSliceVar(&config.excludeDirs, "exclude-dirs", []string{".git", "node_modules"}, "Comma-separated list of directories to exclude from scanning.")
-	emptyCmd.Flags().StringVar(&config.olderThanStr, "older-than", "", "Only consider folders older than a duration (e.g., 30d, 48h, 2w).")
+	emptyCmd.Flags().BoolVarP(&config.force, "force", "f", false, "Skip the confirmation prompt and delete all found folders.")
+	emptyCmd.Flags().BoolVarP(&config.useTrash, "trash", "t", false, "Move folders to system trash instead of permanently deleting.")
+	emptyCmd.Flags().StringSliceVarP(&config.ignoreFiles, "ignore-files", "i", []string{".DS_Store", "Thumbs.db"}, "Comma-separated list of files to ignore (e.g., .DS_Store,Thumbs.db).")
+	emptyCmd.Flags().StringSliceVarP(&config.excludeDirs, "exclude-dirs", "x", []string{".git", "node_modules"}, "Comma-separated list of directories to exclude from scanning.")
+	emptyCmd.Flags().StringVar(&config.olderThanStr, "older-than", "", "Only consider folders older than a duration (e.g., 1m, 10d, 5w, 36h).")
 
 	// Add flags to the 'large' subcommand.
 	largeCmd.Flags().IntVarP(&config.topN, "top", "n", 10, "Number of largest folders to show.")
-	largeCmd.Flags().StringSliceVar(&config.excludeDirs, "exclude-dirs", []string{".git", "node_modules"}, "Comma-separated list of directories to exclude from scanning.")
+	largeCmd.Flags().StringSliceVarP(&config.excludeDirs, "exclude-dirs", "x", []string{".git", "node_modules"}, "Comma-separated list of directories to exclude from scanning.")
 
 	// Add global flags that apply to all subcommands.
 	rootCmd.PersistentFlags().BoolVarP(&config.verbose, "verbose", "v", false, "Enable verbose output.")
@@ -105,6 +124,7 @@ func init() {
 	// Add the subcommands to the root command.
 	rootCmd.AddCommand(emptyCmd)
 	rootCmd.AddCommand(largeCmd)
+	rootCmd.AddCommand(versionCmd)
 }
 
 // --- Main Execution Logic ---
@@ -156,7 +176,7 @@ func runEmpty(cmd *cobra.Command, args []string) {
 	}
 
 	if !config.force {
-		fmt.Printf("\n\033[34m🤔 Would you like to %s them? [Yes/No] \033[0m", getActionString())
+		fmt.Printf("\n\033[34m❓ Would you like to %s them? [Yes/No] \033[0m", getActionString())
 		reader := bufio.NewReader(os.Stdin)
 		response, _ := reader.ReadString('\n')
 		response = strings.ToLower(strings.TrimSpace(response))
@@ -259,7 +279,6 @@ func printEmptyModeSummary(targetDir string, olderThan time.Duration) {
 	logInfo("----------------------------------\n")
 }
 
-// findEmptyRecursive performs a bottom-up search.
 func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) {
 	var allDirs []string
 	deletablePaths := make(map[string]bool)
@@ -291,7 +310,7 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 		return len(strings.Split(allDirs[i], string(os.PathSeparator))) > len(strings.Split(allDirs[j], string(os.PathSeparator)))
 	})
 
-	logVerbose("\nPhase 2: Evaluating directories from deepest to shallowest...")
+	logVerbose("Phase 2: Evaluating directories from deepest to shallowest...")
 	for _, dir := range allDirs {
 		if dir == path {
 			continue
@@ -351,7 +370,6 @@ func findEmptyRecursive(path string, olderThan time.Duration) ([]string, error) 
 	return emptyDirs, nil
 }
 
-// findEmptyTopLevel searches only the immediate children of the target directory.
 func findEmptyTopLevel(path string, olderThan time.Duration) ([]string, error) {
 	var emptyDirs []string
 	ignoreFileSet := stringSliceToSet(config.ignoreFiles)
@@ -419,7 +437,6 @@ func findEmptyTopLevel(path string, olderThan time.Duration) ([]string, error) {
 	return emptyDirs, nil
 }
 
-// calculateDirectorySizes walks the filesystem and calculates the size of each directory.
 func calculateDirectorySizes(root string) (map[string]int64, error) {
 	dirSizes := make(map[string]int64)
 	excludeDirSet := stringSliceToSet(config.excludeDirs)
@@ -469,12 +486,6 @@ func configureLogger() {
 func logInfo(format string, v ...interface{}) {
 	if !config.quiet {
 		logger.Printf(format, v...)
-	}
-}
-
-func logInfoBlue(format string, v ...interface{}) {
-	if !config.quiet {
-		logger.Printf("\033[34m"+format+"\033[0m", v...)
 	}
 }
 
@@ -528,11 +539,14 @@ func parseDuration(durationStr string) (time.Duration, error) {
 	} else if strings.HasSuffix(durationStr, "w") {
 		multiplier = 7 * 24 * time.Hour
 		durationStr = strings.TrimSuffix(durationStr, "w")
+	} else if strings.HasSuffix(durationStr, "m") {
+		multiplier = 30 * 24 * time.Hour
+		durationStr = strings.TrimSuffix(durationStr, "m")
 	} else if strings.HasSuffix(durationStr, "h") {
 		multiplier = time.Hour
 		durationStr = strings.TrimSuffix(durationStr, "h")
 	} else {
-		return 0, fmt.Errorf("unknown duration suffix. Use 'd', 'w', or 'h'")
+		return 0, fmt.Errorf("unknown duration suffix. Use 'm', 'd', 'w', or 'h'")
 	}
 
 	var num int
