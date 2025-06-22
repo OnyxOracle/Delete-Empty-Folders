@@ -43,9 +43,9 @@ call :build openbsd arm
 call :build openbsd arm64
 call :build openbsd ppc64
 call :build openbsd riscv64
-call :build plan9 386
-call :build plan9 amd64
-call :build plan9 arm
+rem call :build plan9 386      afero does not support Plan9
+rem call :build plan9 amd64
+rem call :build plan9 arm
 call :build solaris amd64
 call :build windows 386
 call :build windows amd64

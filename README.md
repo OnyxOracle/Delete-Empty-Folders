@@ -1,6 +1,6 @@
 # 🧹 Cleanup Utility
 
-A powerful, cross-platform command-line tool to find and manage empty or large folders, helping you keep your filesystem tidy.
+A powerful, cross-platform command-line tool to find and manage empty folders, duplicate files, and large directories, helping you keep your filesystem tidy.
 
 ![Demo showing the cleanup utility in action](https://github.com/user-attachments/assets/43a4646a-56d9-493f-aaae-e5378909818b)
 *(Image: A demonstration of the script identifying and deleting nested empty folders.)*
@@ -9,16 +9,25 @@ A powerful, cross-platform command-line tool to find and manage empty or large f
 
 ## ✨ Features
 
-- **Extensive Cross-Platform Support**: Pre-compiled binaries are provided for over 40 combinations of operating systems and architectures (see below).
+- **Extensive Cross-Platform Support**: Pre-compiled binaries are provided for nearly 40 combinations of operating systems and architectures.
 - **No Installation Needed**: Download the executable for your OS, and it's ready to run.
-- **Two Powerful Commands**:
+- **Three Powerful Commands**:
     - `empty`: Finds and deletes empty folders, with support for recursive scanning and cascading deletion.
     - `large`: Scans and lists the largest directories to help you find what's taking up space.
+    - `find`: A versatile tool to find files by various criteria:
+        - **Duplicates**: Finds files with identical content using SHA-256, SHA-1, or MD5 hashing.
+        - **Size**: Finds files larger than a specified size (e.g., `100MB`, `2GB`).
+        - **Age**: Finds files older than a specified duration (e.g., `30d`, `4w`, `12h`).
 - **Safe and Interactive**:
     - Always asks for confirmation before deleting.
     - `--dry-run` flag to preview changes without modifying any files.
     - `--trash` flag to move files to the system trash instead of permanently deleting them.
-- **Highly Configurable**: Use flags to ignore specific files, exclude directories, filter by age, and more.
+    - Interactive prompts for handling duplicate files, with strategies like `--keep newest` or `--keep oldest`.
+- **Highly Configurable**:
+    - Use a `.cleanup.yaml` file for persistent settings.
+    - Searches for config in the current directory first, then the home directory.
+    - Command-line flags always override config file settings for maximum flexibility.
+    - Exclude files and directories by name, full path, glob pattern, or regular expression.
 
 ---
 
@@ -65,11 +74,7 @@ Download the specific executable for your system from the table below, or find a
 | **DragonFly BSD**| 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-dragonfly-amd64)  |
 | **illumos** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-illumos-amd64)  |
 | **Solaris** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-solaris-amd64)  |
-| **Plan 9** | 64-bit (x64) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-plan9-amd64)  |
-|                  | 32-bit (x86) | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-plan9-386)  |
-|                  | ARM 32-bit   | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-plan9-arm)  |
 | **AIX** | PowerPC 64-bit | [Download](https://github.com/OnyxOracle/Delete-Empty-Folders/releases/latest/download/cleanup-aix-ppc64)  |
-
 
 ---
 
@@ -106,9 +111,37 @@ To run the `cleanup` command from any directory, you need to place the executabl
 
 ---
 
-## ⚙️ Usage
+## ⚙️ Configuration
 
-After installation, you can run the tool from any terminal window.
+You can configure the tool using a `.cleanup.yaml` file to avoid typing flags repeatedly.
+
+### How It Works
+
+- **Search Path**: The tool looks for `.cleanup.yaml` in the **current directory first**. If not found, it checks your **home directory**. This allows for project-specific configs.
+- **Precedence**: Settings are applied in the following order (highest priority first):
+    1.  Command-line flags (e.g., `-r`)
+    2.  Environment variables
+    3.  Config file (`.cleanup.yaml`)
+    4.  Default values
+
+### Creating a Config File
+
+To generate a complete, default configuration file, use the `config init` command.
+
+- **Create in current directory:**
+  ```sh
+  cleanup config init
+  ```
+- **Create in your home directory (global):**
+  ```sh
+  cleanup config init --global
+  ```
+
+This will create a `.cleanup.yaml` file with all available settings that you can edit.
+
+---
+
+## 📖 Usage
 
 ### Basic Command
 ```bash
@@ -117,19 +150,30 @@ cleanup [command] [OPTIONS]
 
 ### Examples
 
-**1. Find empty folders recursively in the current directory.**
+**1. Find and delete empty folders recursively (using trash)**
 ```bash
-cleanup empty -r --dry-run
+cleanup empty -r -t
 ```
 
-**2. Find the top 5 largest folders in your Downloads folder.**
+**2. Find the top 5 largest folders, excluding build artifacts**
 ```bash
-cleanup large -n 5 "C:\Users\YourUser\Downloads"
+cleanup large -n 5 --exclude-dirs "build,dist,target" "C:\Users\YourUser\Projects"
 ```
 
-**3. Get help for a specific command.**
+**3. Find all duplicate images in a directory and delete the oldest of each set**
 ```bash
-cleanup empty --help
+# --dry-run is recommended first!
+cleanup find --find-duplicates --keep oldest --exclude-glob "*.txt" /path/to/pictures --dry-run
+```
+
+**4. Find and permanently delete all `.tmp` files older than 90 days**
+```bash
+cleanup find --older-than 90d --exclude-glob "*.tmp" --force
+```
+
+**5. Get help for a specific command**
+```bash
+cleanup find --help
 ```
 
 ---

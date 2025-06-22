@@ -44,9 +44,9 @@ $targets = @(
     @{OS="openbsd";   Arch="arm64"},
     @{OS="openbsd";   Arch="ppc64"},
     @{OS="openbsd";   Arch="riscv64"},
-    @{OS="plan9";     Arch="386"},
-    @{OS="plan9";     Arch="amd64"},
-    @{OS="plan9";     Arch="arm"},
+#   @{OS="plan9";     Arch="386"},    afero does not support Plan9
+#   @{OS="plan9";     Arch="amd64"},
+#   @{OS="plan9";     Arch="arm"},
     @{OS="solaris";   Arch="amd64"},
     @{OS="windows";   Arch="386"},
     @{OS="windows";   Arch="amd64"},

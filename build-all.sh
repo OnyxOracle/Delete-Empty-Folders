@@ -45,9 +45,9 @@ targets=(
     "openbsd/arm64"
     "openbsd/ppc64"
     "openbsd/riscv64"
-    "plan9/386"
-    "plan9/amd64"
-    "plan9/arm"
+#   "plan9/386"        afero does not support Plan9
+#   "plan9/amd64"
+#   "plan9/arm"
     "solaris/amd64"
     "windows/386"
     "windows/amd64"
