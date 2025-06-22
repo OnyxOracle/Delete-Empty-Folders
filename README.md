@@ -191,6 +191,10 @@ To build a single executable for your current operating system and architecture,
 ```bash
 go build -o cleanup .
 ```
+Or, for Windows run:
+```bash
+go build -o cleanup.exe .
+```
 
 ### Build All Binaries
 To generate all the executables listed in the downloads table, use the provided build scripts.
