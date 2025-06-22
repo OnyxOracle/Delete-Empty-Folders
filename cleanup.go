@@ -341,11 +341,11 @@ func runEmpty(ctx context.Context, args []string) error {
 	}
 	printEmptyModeSummary(targetDir)
 
-	var emptyDirs []string
+	var allEmptyDirs []string
 	if config.Recursive {
-		emptyDirs, err = findEmptyRecursive(ctx, targetDir, runCtx)
+		allEmptyDirs, err = findEmptyRecursive(ctx, targetDir, runCtx)
 	} else {
-		emptyDirs, err = findEmptyTopLevel(ctx, targetDir, runCtx)
+		allEmptyDirs, err = findEmptyTopLevel(ctx, targetDir, runCtx)
 	}
 	if err != nil {
 		addError(fmt.Errorf("error during scan: %w", err))
@@ -355,14 +355,18 @@ func runEmpty(ctx context.Context, args []string) error {
 		return ctx.Err()
 	}
 
-	if len(emptyDirs) > 0 {
-		logInfo("\n🔎 Found %d empty folders to process:", len(emptyDirs))
+	if len(allEmptyDirs) > 0 {
+		logInfo("\n🔎 Found %d empty folder(s):", len(allEmptyDirs))
 		var outputData []map[string]interface{}
-		for _, dir := range emptyDirs {
+		for _, dir := range allEmptyDirs {
 			outputData = append(outputData, map[string]interface{}{"path": dir})
 		}
 		outputResults(outputData, []string{"path"})
-		handleDeletion("empty folders", emptyDirs, 0)
+
+		// Filter the list to get only the top-most parents for safe deletion.
+		finalDirsToDelete := filterSubdirectories(allEmptyDirs)
+		logInfo("\n🚮 Preparing to delete %d top-level empty folder(s)...", len(finalDirsToDelete))
+		handleDeletion("empty folders", finalDirsToDelete, 0)
 	} else {
 		logInfo("\n🎉 Success! No empty folders were found.")
 	}
@@ -1431,4 +1435,29 @@ func contains(s []string, e string) bool {
 		}
 	}
 	return false
+}
+
+// filterSubdirectories takes a list of paths and returns a new list
+// containing only the top-most parent directories from the original list.
+// This prevents trying to delete a child directory that will already be
+// deleted when its parent is.
+func filterSubdirectories(paths []string) []string {
+	// Create a set for quick lookups of which paths are in the list.
+	pathSet := make(map[string]struct{}, len(paths))
+	for _, p := range paths {
+		pathSet[p] = struct{}{}
+	}
+
+	var result []string
+	// Iterate through each path to decide if it should be kept.
+	for _, p := range paths {
+		// Get the parent directory of the current path.
+		parent := filepath.Dir(p)
+		// A path should be kept if its parent is NOT in the set of paths to be deleted.
+		// This means it's a top-level directory in the context of the deletion list.
+		if _, ok := pathSet[parent]; !ok {
+			result = append(result, p)
+		}
+	}
+	return result
 }
