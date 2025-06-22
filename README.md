@@ -2,8 +2,8 @@
 
 A powerful, cross-platform command-line tool to find and manage empty folders, duplicate files, and large directories, helping you keep your filesystem tidy.
 
-![Demo showing the cleanup utility in action](https://github.com/user-attachments/assets/43a4646a-56d9-493f-aaae-e5378909818b)
-*(Image: A demonstration of the script identifying and deleting nested empty folders.)*
+![Demo showing the cleanup utility in action](https://github.com/user-attachments/assets/0808fb71-467c-437f-a2d3-f33eb44ec105)
+*(Image: A demonstration of the script identifying and deleting empty folders.)*
 
 ---
 
